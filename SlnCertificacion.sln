@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PryCertificacion", "ProyectoCertificacion\PryCertificacion.csproj", "{B6537A39-8CE0-40AA-BB8E-87F7513636E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BEUCertificacion", "BEUCertificacion\BEUCertificacion.csproj", "{E1DADFAA-230C-494E-B7A3-502BAA6D1D56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6537A39-8CE0-40AA-BB8E-87F7513636E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6537A39-8CE0-40AA-BB8E-87F7513636E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6537A39-8CE0-40AA-BB8E-87F7513636E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6537A39-8CE0-40AA-BB8E-87F7513636E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1DADFAA-230C-494E-B7A3-502BAA6D1D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1DADFAA-230C-494E-B7A3-502BAA6D1D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1DADFAA-230C-494E-B7A3-502BAA6D1D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1DADFAA-230C-494E-B7A3-502BAA6D1D56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {638C836C-4584-4C3C-B244-4A60E8BC56BD}
+	EndGlobalSection
+EndGlobal
