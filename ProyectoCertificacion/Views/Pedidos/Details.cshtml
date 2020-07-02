@@ -1,0 +1,58 @@
+﻿@model BEUCertificacion.Pedido
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaPeticion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaPeticion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaEjecucion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaEjecucion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cliente.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Servicio.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Servicio.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idpedido }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

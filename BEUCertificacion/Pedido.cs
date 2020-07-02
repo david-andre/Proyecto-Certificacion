@@ -11,12 +11,20 @@ namespace BEUCertificacion
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Pedido
     {
+        [ScaffoldColumn(false)]
         public int idpedido { get; set; }
+        [Display(Name = "Fecha de Petición")]
+        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fechaPeticion { get; set; }
+        [Display(Name = "Estado")]
         public string estado { get; set; }
+        [Display(Name = "Fecha de Ejecución")]
+        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> fechaEjecucion { get; set; }
         public Nullable<int> idservicio { get; set; }
         public Nullable<int> idcliente { get; set; }

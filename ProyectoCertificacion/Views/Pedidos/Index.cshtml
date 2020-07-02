@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BEUCertificacion.Pedido>
+
+@{
+    ViewBag.Title = "Pedidos";
+}
+
+<h2>Pedidos</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaPeticion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaEjecucion)
+        </th>
+        <th>
+            Cliente
+        </th>
+        <th>
+            Empresa
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Servicio.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.fechaPeticion)
+    </td>
+    @if (item.estado.Equals("En espera"))
+    {
+        <td>@Html.Label("En espera", htmlAttributes: new { @class = "h5 label label-warning" })</td>
+    }
+    else
+    {
+        <td>@Html.Label("Aprobado", htmlAttributes: new { @class = "h5 label label-success" }) </td>
+    }
+    <td>
+        @Html.DisplayFor(modelItem => item.fechaEjecucion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Cliente.nombre)
+        @Html.DisplayFor(modelItem => item.Cliente.apellido)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Servicio.Empresa.nombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Servicio.nombre)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.idpedido }) |
+        @Html.ActionLink("Details", "Details", new { id = item.idpedido }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.idpedido })
+    </td>
+</tr>
+}
+
+</table>

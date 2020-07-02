@@ -78,6 +78,10 @@
     <Compile Include="Servicio.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Transactions\ClienteBLL.cs" />
+    <Compile Include="Transactions\EmpresaBLL.cs" />
+    <Compile Include="Transactions\PedidoBLL.cs" />
+    <Compile Include="Transactions\ServicioBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Model1.edmx">

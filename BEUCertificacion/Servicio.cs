@@ -11,7 +11,8 @@ namespace BEUCertificacion
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Servicio
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +20,13 @@ namespace BEUCertificacion
         {
             this.Pedidoes = new HashSet<Pedido>();
         }
-    
+        [ScaffoldColumn(false)]
         public int idservicio { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "El nombre es requerido"), MaxLength(100)]
+        [Display(Name = "Servicio")]
         public string nombre { get; set; }
+        [Display(Name = "Empresa")]
         public Nullable<int> idempresa { get; set; }
     
         public virtual Empresa Empresa { get; set; }

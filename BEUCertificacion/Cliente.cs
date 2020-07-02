@@ -11,7 +11,8 @@ namespace BEUCertificacion
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,13 +20,31 @@ namespace BEUCertificacion
         {
             this.Pedidoes = new HashSet<Pedido>();
         }
-    
+        [ScaffoldColumn(false)]
         public int idcliente { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "El nombre es requerido"), MaxLength(25)]
+        [Display(Name = "Nombre")]
         public string nombre { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "El apellido es requerido"), MaxLength(25)]
+        [Display(Name = "Apellido")]
         public string apellido { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "La cédula es requerida"), MaxLength(15)]
+        [Display(Name = "Cédula")]
         public string cedula { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "El teléfono es requerido"), MaxLength(15)]
+        [Display(Name = "Teléfono")]
         public string telefono { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "La ciudad es requerida"), MaxLength(15)]
+        [Display(Name = "Ciudad")]
         public string ciudad { get; set; }
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "La dirección es requerida"), MaxLength(100)]
+        [Display(Name = "Dirección")]
         public string direccion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
