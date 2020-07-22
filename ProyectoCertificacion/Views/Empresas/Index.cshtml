@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<BEUCertificacion.Empresa>
 
 @{
-    ViewBag.Title = "Empresas";
+    ViewBag.Title = "Index";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-hover">
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)

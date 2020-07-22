@@ -15,21 +15,30 @@ namespace BEUCertificacion
 
     public partial class Pedido
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pedido()
+        {
+            this.DetallePedidoes = new HashSet<DetallePedido>();
+        }
+
         [ScaffoldColumn(false)]
         public int idpedido { get; set; }
         [Display(Name = "Fecha de Petición")]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fechaPeticion { get; set; }
         [Display(Name = "Estado")]
         public string estado { get; set; }
         [Display(Name = "Fecha de Ejecución")]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        [DataType(DataType.DateTime)]
         public Nullable<System.DateTime> fechaEjecucion { get; set; }
-        public Nullable<int> idservicio { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Costo")]
+        public Nullable<decimal> costo { get; set; }
+        [Display(Name = "Cliente")]
         public Nullable<int> idcliente { get; set; }
-    
+
         public virtual Cliente Cliente { get; set; }
-        public virtual Servicio Servicio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetallePedido> DetallePedidoes { get; set; }
     }
 }

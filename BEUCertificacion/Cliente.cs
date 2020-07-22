@@ -9,6 +9,7 @@
 
 namespace BEUCertificacion
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,7 @@ namespace BEUCertificacion
         {
             this.Pedidoes = new HashSet<Pedido>();
         }
+
         [ScaffoldColumn(false)]
         public int idcliente { get; set; }
         [DataType(DataType.Text)]
@@ -39,15 +41,16 @@ namespace BEUCertificacion
         [Display(Name = "Teléfono")]
         public string telefono { get; set; }
         [DataType(DataType.Text)]
-        [Required(ErrorMessage = "La ciudad es requerida"), MaxLength(15)]
+        [Required(ErrorMessage = "La ciudad es requerida"), MaxLength(25)]
         [Display(Name = "Ciudad")]
         public string ciudad { get; set; }
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "La dirección es requerida"), MaxLength(100)]
         [Display(Name = "Dirección")]
         public string direccion { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<Pedido> Pedidoes { get; set; }
     }
 }

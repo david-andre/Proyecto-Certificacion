@@ -1,18 +1,24 @@
 ﻿@model IEnumerable<BEUCertificacion.Servicio>
 
 @{
-    ViewBag.Title = "Servicios";
+    ViewBag.Title = "Index";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-hover">
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.costo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Empresa.nombre)
@@ -24,6 +30,12 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Empresa.nombre)

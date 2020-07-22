@@ -13,6 +13,7 @@ namespace ProyectoCertificacion.Controllers
 {
     public class ServiciosController : Controller
     {
+
         // GET: Servicios
         public ActionResult Index()
         {
@@ -46,7 +47,7 @@ namespace ProyectoCertificacion.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idservicio,nombre,idempresa")] Servicio servicio)
+        public ActionResult Create([Bind(Include = "idservicio,nombre,costo,descripcion,idempresa")] Servicio servicio)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +80,7 @@ namespace ProyectoCertificacion.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idservicio,nombre,idempresa")] Servicio servicio)
+        public ActionResult Edit([Bind(Include = "idservicio,nombre,costo,descripcion,idempresa")] Servicio servicio)
         {
             if (ModelState.IsValid)
             {

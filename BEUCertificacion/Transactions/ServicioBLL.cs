@@ -66,13 +66,6 @@ namespace BEUCertificacion.Transactions
                     {
                         Servicio s = db.Servicios.Find(id);
                         db.Entry(s).State = System.Data.Entity.EntityState.Deleted;
-                        foreach (Pedido p in db.Pedidoes.ToList())
-                        {
-                            if (p.idservicio == id)
-                            {
-                                db.Entry(p).State = System.Data.Entity.EntityState.Deleted;
-                            }
-                        }
                         db.SaveChanges();
                         transaction.Commit();
                     }

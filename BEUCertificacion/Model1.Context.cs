@@ -26,6 +26,7 @@ namespace BEUCertificacion
         }
     
         public virtual DbSet<Cliente> Clientes { get; set; }
+        public virtual DbSet<DetallePedido> DetallePedidoes { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<Pedido> Pedidoes { get; set; }
         public virtual DbSet<Servicio> Servicios { get; set; }

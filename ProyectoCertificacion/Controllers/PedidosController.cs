@@ -38,7 +38,6 @@ namespace ProyectoCertificacion.Controllers
         public ActionResult Create()
         {
             ViewBag.idcliente = new SelectList(ClienteBLL.ListToNames(), "idcliente", "nombre");
-            ViewBag.idservicio = new SelectList(ServicioBLL.ListToNames(), "idservicio", "nombre");
             return View();
         }
 
@@ -47,7 +46,7 @@ namespace ProyectoCertificacion.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idpedido,idservicio,idcliente")] Pedido pedido)
+        public ActionResult Create([Bind(Include = "idpedido,fechaPeticion,estado,fechaEjecucion,costo,idcliente")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +55,6 @@ namespace ProyectoCertificacion.Controllers
             }
 
             ViewBag.idcliente = new SelectList(ClienteBLL.ListToNames(), "idcliente", "nombre", pedido.idcliente);
-            ViewBag.idservicio = new SelectList(ServicioBLL.ListToNames(), "idservicio", "nombre", pedido.idservicio);
             return View(pedido);
         }
 
@@ -73,7 +71,6 @@ namespace ProyectoCertificacion.Controllers
                 return HttpNotFound();
             }
             ViewBag.idcliente = new SelectList(ClienteBLL.ListToNames(), "idcliente", "nombre", pedido.idcliente);
-            ViewBag.idservicio = new SelectList(ServicioBLL.ListToNames(), "idservicio", "nombre", pedido.idservicio);
             return View(pedido);
         }
 
@@ -82,7 +79,7 @@ namespace ProyectoCertificacion.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idpedido,fechaPeticion,fechaEjecucion,idservicio,idcliente")] Pedido pedido)
+        public ActionResult Edit([Bind(Include = "idpedido,fechaPeticion,estado,fechaEjecucion,costo,idcliente")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +87,6 @@ namespace ProyectoCertificacion.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.idcliente = new SelectList(ClienteBLL.ListToNames(), "idcliente", "nombre", pedido.idcliente);
-            ViewBag.idservicio = new SelectList(ServicioBLL.ListToNames(), "idservicio", "nombre", pedido.idservicio);
             return View(pedido);
         }
 

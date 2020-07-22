@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DBPROYECTOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="idcliente" />
@@ -16,6 +16,14 @@
           <Property Name="telefono" Type="varchar" MaxLength="15" />
           <Property Name="ciudad" Type="varchar" MaxLength="25" />
           <Property Name="direccion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="iddetalle" />
+          </Key>
+          <Property Name="iddetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idpedido" Type="int" />
+          <Property Name="idservicio" Type="int" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -32,10 +40,10 @@
             <PropertyRef Name="idpedido" />
           </Key>
           <Property Name="idpedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fechaPeticion" Type="date" />
+          <Property Name="fechaPeticion" Type="datetime" />
           <Property Name="estado" Type="varchar" MaxLength="15" />
-          <Property Name="fechaEjecucion" Type="date" />
-          <Property Name="idservicio" Type="int" />
+          <Property Name="fechaEjecucion" Type="datetime" />
+          <Property Name="costo" Type="decimal" Precision="18" Scale="2" />
           <Property Name="idcliente" Type="int" />
         </EntityType>
         <EntityType Name="Servicio">
@@ -44,8 +52,34 @@
           </Key>
           <Property Name="idservicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="costo" Type="varchar" MaxLength="20" />
+          <Property Name="descripcion" Type="varchar(max)" />
           <Property Name="idempresa" Type="int" />
         </EntityType>
+        <Association Name="FK_DetallePedido_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="idpedido" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idpedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallePedido_Servicio">
+          <End Role="Servicio" Type="Self.Servicio" Multiplicity="0..1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicio">
+              <PropertyRef Name="idservicio" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idservicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pedido_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
@@ -55,18 +89,6 @@
             </Principal>
             <Dependent Role="Pedido">
               <PropertyRef Name="idcliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pedido_Servicio">
-          <End Role="Servicio" Type="Self.Servicio" Multiplicity="0..1" />
-          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Servicio">
-              <PropertyRef Name="idservicio" />
-            </Principal>
-            <Dependent Role="Pedido">
-              <PropertyRef Name="idservicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -82,17 +104,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DBModelStoreContainer">
+        <EntityContainer Name="DBPROYECTOModelStoreContainer">
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servicio" EntityType="Self.Servicio" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DetallePedido_Pedido" Association="Self.FK_DetallePedido_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallePedido_Servicio" Association="Self.FK_DetallePedido_Servicio">
+            <End Role="Servicio" EntitySet="Servicio" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Pedido" EntitySet="Pedido" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pedido_Servicio" Association="Self.FK_Pedido_Servicio">
-            <End Role="Servicio" EntitySet="Servicio" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
           <AssociationSet Name="FK_Servicio_Empresa" Association="Self.FK_Servicio_Empresa">
@@ -104,7 +131,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DBPROYECTOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="idcliente" />
@@ -117,6 +144,16 @@
           <Property Name="ciudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pedidoes" Relationship="Self.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="iddetalle" />
+          </Key>
+          <Property Name="iddetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idpedido" Type="Int32" />
+          <Property Name="idservicio" Type="Int32" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_DetallePedido_Pedido" FromRole="DetallePedido" ToRole="Pedido" />
+          <NavigationProperty Name="Servicio" Relationship="Self.FK_DetallePedido_Servicio" FromRole="DetallePedido" ToRole="Servicio" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -134,13 +171,13 @@
             <PropertyRef Name="idpedido" />
           </Key>
           <Property Name="idpedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fechaPeticion" Type="DateTime" Precision="0" />
+          <Property Name="fechaPeticion" Type="DateTime" Precision="3" />
           <Property Name="estado" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="fechaEjecucion" Type="DateTime" Precision="0" />
-          <Property Name="idservicio" Type="Int32" />
+          <Property Name="fechaEjecucion" Type="DateTime" Precision="3" />
+          <Property Name="costo" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="idcliente" Type="Int32" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK_Pedido_Cliente" FromRole="Pedido" ToRole="Cliente" />
-          <NavigationProperty Name="Servicio" Relationship="Self.FK_Pedido_Servicio" FromRole="Pedido" ToRole="Servicio" />
+          <NavigationProperty Name="DetallePedidoes" Relationship="Self.FK_DetallePedido_Pedido" FromRole="Pedido" ToRole="DetallePedido" />
         </EntityType>
         <EntityType Name="Servicio">
           <Key>
@@ -148,9 +185,11 @@
           </Key>
           <Property Name="idservicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="costo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="idempresa" Type="Int32" />
+          <NavigationProperty Name="DetallePedidoes" Relationship="Self.FK_DetallePedido_Servicio" FromRole="Servicio" ToRole="DetallePedido" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK_Servicio_Empresa" FromRole="Servicio" ToRole="Empresa" />
-          <NavigationProperty Name="Pedidoes" Relationship="Self.FK_Pedido_Servicio" FromRole="Servicio" ToRole="Pedido" />
         </EntityType>
         <Association Name="FK_Pedido_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
@@ -161,6 +200,30 @@
             </Principal>
             <Dependent Role="Pedido">
               <PropertyRef Name="idcliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallePedido_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="idpedido" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idpedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetallePedido_Servicio">
+          <End Role="Servicio" Type="Self.Servicio" Multiplicity="0..1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicio">
+              <PropertyRef Name="idservicio" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="idservicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -176,20 +239,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pedido_Servicio">
-          <End Role="Servicio" Type="Self.Servicio" Multiplicity="0..1" />
-          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Servicio">
-              <PropertyRef Name="idservicio" />
-            </Principal>
-            <Dependent Role="Pedido">
-              <PropertyRef Name="idservicio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="DetallePedidoes" EntityType="Self.DetallePedido" />
           <EntitySet Name="Empresas" EntityType="Self.Empresa" />
           <EntitySet Name="Pedidoes" EntityType="Self.Pedido" />
           <EntitySet Name="Servicios" EntityType="Self.Servicio" />
@@ -197,13 +249,17 @@
             <End Role="Cliente" EntitySet="Clientes" />
             <End Role="Pedido" EntitySet="Pedidoes" />
           </AssociationSet>
+          <AssociationSet Name="FK_DetallePedido_Pedido" Association="Self.FK_DetallePedido_Pedido">
+            <End Role="Pedido" EntitySet="Pedidoes" />
+            <End Role="DetallePedido" EntitySet="DetallePedidoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetallePedido_Servicio" Association="Self.FK_DetallePedido_Servicio">
+            <End Role="Servicio" EntitySet="Servicios" />
+            <End Role="DetallePedido" EntitySet="DetallePedidoes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Servicio_Empresa" Association="Self.FK_Servicio_Empresa">
             <End Role="Empresa" EntitySet="Empresas" />
             <End Role="Servicio" EntitySet="Servicios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pedido_Servicio" Association="Self.FK_Pedido_Servicio">
-            <End Role="Servicio" EntitySet="Servicios" />
-            <End Role="Pedido" EntitySet="Pedidoes" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -211,9 +267,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="DBPROYECTOModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Clientes">
-            <EntityTypeMapping TypeName="DBModel.Cliente">
+            <EntityTypeMapping TypeName="DBPROYECTOModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
                 <ScalarProperty Name="idcliente" ColumnName="idcliente" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -225,8 +281,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DetallePedidoes">
+            <EntityTypeMapping TypeName="DBPROYECTOModel.DetallePedido">
+              <MappingFragment StoreEntitySet="DetallePedido">
+                <ScalarProperty Name="iddetalle" ColumnName="iddetalle" />
+                <ScalarProperty Name="idpedido" ColumnName="idpedido" />
+                <ScalarProperty Name="idservicio" ColumnName="idservicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Empresas">
-            <EntityTypeMapping TypeName="DBModel.Empresa">
+            <EntityTypeMapping TypeName="DBPROYECTOModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
                 <ScalarProperty Name="idempresa" ColumnName="idempresa" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -237,22 +302,24 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pedidoes">
-            <EntityTypeMapping TypeName="DBModel.Pedido">
+            <EntityTypeMapping TypeName="DBPROYECTOModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
                 <ScalarProperty Name="idpedido" ColumnName="idpedido" />
                 <ScalarProperty Name="fechaPeticion" ColumnName="fechaPeticion" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="fechaEjecucion" ColumnName="fechaEjecucion" />
-                <ScalarProperty Name="idservicio" ColumnName="idservicio" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
                 <ScalarProperty Name="idcliente" ColumnName="idcliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Servicios">
-            <EntityTypeMapping TypeName="DBModel.Servicio">
+            <EntityTypeMapping TypeName="DBPROYECTOModel.Servicio">
               <MappingFragment StoreEntitySet="Servicio">
                 <ScalarProperty Name="idservicio" ColumnName="idservicio" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="idempresa" ColumnName="idempresa" />
               </MappingFragment>
             </EntityTypeMapping>

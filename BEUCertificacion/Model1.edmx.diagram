@@ -4,14 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="98617dc500254c10a13effab3ae63584" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Cliente" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Empresa" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Pedido" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Servicio" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="DBModel.FK_Pedido_Cliente" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_Servicio_Empresa" ManuallyRouted="false" />
-        <AssociationConnector Association="DBModel.FK_Pedido_Servicio" ManuallyRouted="false" />
+      <Diagram DiagramId="e3b17575c97d49a4b7116079568bbb24" Name="Diagram1">
+        <EntityTypeShape EntityType="DBPROYECTOModel.Cliente" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBPROYECTOModel.DetallePedido" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBPROYECTOModel.Empresa" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBPROYECTOModel.Pedido" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBPROYECTOModel.Servicio" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="DBPROYECTOModel.FK_Pedido_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="DBPROYECTOModel.FK_DetallePedido_Pedido" ManuallyRouted="false" />
+        <AssociationConnector Association="DBPROYECTOModel.FK_DetallePedido_Servicio" ManuallyRouted="false" />
+        <AssociationConnector Association="DBPROYECTOModel.FK_Servicio_Empresa" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

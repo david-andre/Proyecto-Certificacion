@@ -13,7 +13,6 @@ namespace ProyectoCertificacion.Controllers
 {
     public class EmpresasController : Controller
     {
-
         // GET: Empresas
         public ActionResult Index()
         {
