@@ -9,6 +9,7 @@
 
 namespace BEUCertificacion
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -37,9 +38,11 @@ namespace BEUCertificacion
         public string descripcion { get; set; }
         [Display(Name = "Empresa")]
         public Nullable<int> idempresa { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<DetallePedido> DetallePedidoes { get; set; }
+        [JsonIgnore]
         public virtual Empresa Empresa { get; set; }
     }
 }

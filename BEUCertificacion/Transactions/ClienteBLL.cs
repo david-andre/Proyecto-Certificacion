@@ -71,6 +71,13 @@ namespace BEUCertificacion.Transactions
                         {
                             if (p.idcliente == id)
                             {
+                                foreach (DetallePedido dp in db.DetallePedidoes.ToList())
+                                {
+                                    if (dp.idpedido == p.idpedido)
+                                    {
+                                        db.Entry(dp).State = System.Data.Entity.EntityState.Deleted;
+                                    }
+                                }
                                 db.Entry(p).State = System.Data.Entity.EntityState.Deleted;
                             }
                         }

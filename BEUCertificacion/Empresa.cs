@@ -9,6 +9,7 @@
 
 namespace BEUCertificacion
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -39,8 +40,8 @@ namespace BEUCertificacion
         [Required(ErrorMessage = "La dirección es requerida"), MaxLength(100)]
         [Display(Name = "Dirección")]
         public string direccion { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<Servicio> Servicios { get; set; }
     }
 }

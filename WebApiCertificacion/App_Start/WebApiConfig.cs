@@ -21,6 +21,17 @@ namespace WebApiCertificacion
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Routes.MapHttpRoute(
+                name: "GetServiceById",
+                routeTemplate: "api/{controller}/GetOne/{id}",
+                defaults: new { controller = "ServiciosController", action = "GetOne", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetByBussiness",
+                routeTemplate: "api/{controller}/GetByBussiness/{id}",
+                defaults: new { controller = "ServiciosController", action = "GetByBussiness", id = RouteParameter.Optional }
+            );
         }
     }
 }
