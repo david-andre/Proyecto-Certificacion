@@ -22,6 +22,8 @@ namespace BEUCertificacion.Transactions
                 {
                     try
                     {
+                        int ultimoPedido = PedidoBLL.List().Select(x => x.idpedido).Max();
+                        dp.idpedido = ultimoPedido;
                         db.DetallePedidoes.Add(dp);
                         db.SaveChanges();
                         transaction.Commit();
@@ -34,5 +36,18 @@ namespace BEUCertificacion.Transactions
                 }
             }
         }
+
+        public static List<DetallePedido> List()
+        {
+            Entities db = new Entities();
+            return db.DetallePedidoes.ToList();
+        }
+
+        public static List<DetallePedido> List(int id)
+        {
+            Entities db = new Entities();
+            return db.DetallePedidoes.Where(x => x.idpedido == id).ToList();
+        }
+
     }
 }

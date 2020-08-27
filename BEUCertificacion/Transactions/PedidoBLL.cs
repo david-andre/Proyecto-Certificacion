@@ -94,5 +94,11 @@ namespace BEUCertificacion.Transactions
             Entities db = new Entities();
             return db.Pedidoes.ToList();
         }
+
+        public static List<Pedido> List(int id)
+        {
+            Entities db = new Entities();
+            return db.Pedidoes.Where(x => x.Cliente.idcliente == id).ToList();
+        }
     }
 }

@@ -42,7 +42,6 @@ namespace BEUCertificacion
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore]
         public virtual ICollection<DetallePedido> DetallePedidoes { get; set; }
-        [JsonIgnore]
         public virtual Empresa Empresa { get; set; }
     }
 }
