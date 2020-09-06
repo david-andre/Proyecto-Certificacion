@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBPROYECTOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBPROYECTOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="idcliente" />
@@ -16,6 +16,7 @@
           <Property Name="telefono" Type="varchar" MaxLength="15" />
           <Property Name="ciudad" Type="varchar" MaxLength="25" />
           <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="idusuario" Type="int" />
         </EntityType>
         <EntityType Name="DetallePedido">
           <Key>
@@ -24,6 +25,7 @@
           <Property Name="iddetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idpedido" Type="int" />
           <Property Name="idservicio" Type="int" />
+          <Property Name="costo" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -34,6 +36,7 @@
           <Property Name="telefono" Type="varchar" MaxLength="20" />
           <Property Name="ciudad" Type="varchar" MaxLength="25" />
           <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="idusuario" Type="int" />
         </EntityType>
         <EntityType Name="Pedido">
           <Key>
@@ -56,6 +59,27 @@
           <Property Name="descripcion" Type="varchar(max)" />
           <Property Name="idempresa" Type="int" />
         </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" />
+          <Property Name="contrasena" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Cliente_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetallePedido_Pedido">
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
           <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
@@ -77,6 +101,18 @@
             </Principal>
             <Dependent Role="DetallePedido">
               <PropertyRef Name="idservicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="idusuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -110,6 +146,11 @@
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servicio" EntityType="Self.Servicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cliente_Usuario" Association="Self.FK_Cliente_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetallePedido_Pedido" Association="Self.FK_DetallePedido_Pedido">
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="DetallePedido" EntitySet="DetallePedido" />
@@ -117,6 +158,10 @@
           <AssociationSet Name="FK_DetallePedido_Servicio" Association="Self.FK_DetallePedido_Servicio">
             <End Role="Servicio" EntitySet="Servicio" />
             <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Usuario" Association="Self.FK_Empresa_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Empresa" EntitySet="Empresa" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -127,8 +172,7 @@
             <End Role="Servicio" EntitySet="Servicio" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBPROYECTOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -144,6 +188,8 @@
           <Property Name="ciudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pedidoes" Relationship="Self.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
+          <Property Name="idusuario" Type="Int32" />
+          <NavigationProperty Name="Usuario" Relationship="DBPROYECTOModel.FK_Cliente_Usuario" FromRole="Cliente" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="DetallePedido">
           <Key>
@@ -154,6 +200,7 @@
           <Property Name="idservicio" Type="Int32" />
           <NavigationProperty Name="Pedido" Relationship="Self.FK_DetallePedido_Pedido" FromRole="DetallePedido" ToRole="Pedido" />
           <NavigationProperty Name="Servicio" Relationship="Self.FK_DetallePedido_Servicio" FromRole="DetallePedido" ToRole="Servicio" />
+          <Property Name="costo" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -165,6 +212,8 @@
           <Property Name="ciudad" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Servicios" Relationship="Self.FK_Servicio_Empresa" FromRole="Empresa" ToRole="Servicio" />
+          <Property Name="idusuario" Type="Int32" />
+          <NavigationProperty Name="Usuario" Relationship="DBPROYECTOModel.FK_Empresa_Usuario" FromRole="Empresa" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Pedido">
           <Key>
@@ -261,7 +310,51 @@
             <End Role="Empresa" EntitySet="Empresas" />
             <End Role="Servicio" EntitySet="Servicios" />
           </AssociationSet>
+          <EntitySet Name="Usuarios" EntityType="DBPROYECTOModel.Usuario" />
+          <AssociationSet Name="FK_Cliente_Usuario" Association="DBPROYECTOModel.FK_Cliente_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Usuario" Association="DBPROYECTOModel.FK_Empresa_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Empresa" EntitySet="Empresas" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="DBPROYECTOModel.FK_Cliente_Usuario" FromRole="Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="Empresas" Relationship="DBPROYECTOModel.FK_Empresa_Usuario" FromRole="Usuario" ToRole="Empresa" />
+        </EntityType>
+        <Association Name="FK_Cliente_Usuario">
+          <End Type="DBPROYECTOModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="DBPROYECTOModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Usuario">
+          <End Type="DBPROYECTOModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="DBPROYECTOModel.Empresa" Role="Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -271,6 +364,7 @@
           <EntitySetMapping Name="Clientes">
             <EntityTypeMapping TypeName="DBPROYECTOModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
                 <ScalarProperty Name="idcliente" ColumnName="idcliente" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellido" ColumnName="apellido" />
@@ -284,6 +378,7 @@
           <EntitySetMapping Name="DetallePedidoes">
             <EntityTypeMapping TypeName="DBPROYECTOModel.DetallePedido">
               <MappingFragment StoreEntitySet="DetallePedido">
+                <ScalarProperty Name="costo" ColumnName="costo" />
                 <ScalarProperty Name="iddetalle" ColumnName="iddetalle" />
                 <ScalarProperty Name="idpedido" ColumnName="idpedido" />
                 <ScalarProperty Name="idservicio" ColumnName="idservicio" />
@@ -293,6 +388,7 @@
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="DBPROYECTOModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
                 <ScalarProperty Name="idempresa" ColumnName="idempresa" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
@@ -321,6 +417,16 @@
                 <ScalarProperty Name="costo" ColumnName="costo" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="idempresa" ColumnName="idempresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="DBPROYECTOModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

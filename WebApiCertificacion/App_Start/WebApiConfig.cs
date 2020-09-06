@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using WebApiCertificacion.Models;
 
 namespace WebApiCertificacion
 {
@@ -12,9 +13,10 @@ namespace WebApiCertificacion
             // Configuración y servicios de API web
 
             config.EnableCors();
+            config.MapHttpAttributeRoutes();
+            config.MessageHandlers.Add(new TokenValidationHandler());
 
             // Rutas de API web
-            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -53,6 +55,11 @@ namespace WebApiCertificacion
                 name: "GetByPedido",
                 routeTemplate: "api/{controller}/GetByPedido/{id}",
                 defaults: new { controller = "DetallePedidoController", action = "GetByPedido", id = RouteParameter.Optional }
+            );
+            config.Routes.MapHttpRoute(
+                name: "GetClientByUser",
+                routeTemplate: "api/{controller}/GetByUser/{id}",
+                defaults: new { controller = "ClientesController", action = "GetByUser", id = RouteParameter.Optional }
             );
 
         }

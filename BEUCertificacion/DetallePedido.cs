@@ -17,6 +17,7 @@ namespace BEUCertificacion
         public int iddetalle { get; set; }
         public Nullable<int> idpedido { get; set; }
         public Nullable<int> idservicio { get; set; }
+        public Nullable<decimal> costo { get; set; }
     
         public virtual Pedido Pedido { get; set; }
         public virtual Servicio Servicio { get; set; }

@@ -49,8 +49,12 @@ namespace BEUCertificacion
         [Display(Name = "Dirección")]
         public string direccion { get; set; }
 
+        public Nullable<int> idusuario { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore]
         public virtual ICollection<Pedido> Pedidoes { get; set; }
+
+        public virtual Usuario Usuario { get; set; }
     }
 }

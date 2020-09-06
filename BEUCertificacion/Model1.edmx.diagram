@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e3b17575c97d49a4b7116079568bbb24" Name="Diagram1">
-        <EntityTypeShape EntityType="DBPROYECTOModel.Cliente" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBPROYECTOModel.Cliente" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DBPROYECTOModel.DetallePedido" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DBPROYECTOModel.Empresa" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DBPROYECTOModel.Pedido" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
@@ -14,6 +14,9 @@
         <AssociationConnector Association="DBPROYECTOModel.FK_DetallePedido_Pedido" ManuallyRouted="false" />
         <AssociationConnector Association="DBPROYECTOModel.FK_DetallePedido_Servicio" ManuallyRouted="false" />
         <AssociationConnector Association="DBPROYECTOModel.FK_Servicio_Empresa" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBPROYECTOModel.Usuario" Width="1.5" PointX="0.75" PointY="4" />
+        <AssociationConnector Association="DBPROYECTOModel.FK_Cliente_Usuario" />
+        <AssociationConnector Association="DBPROYECTOModel.FK_Empresa_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -8,18 +8,43 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
+using WebApiCertificacion.Models;
 
 namespace WebApiCertificacion.Controllers
 {
+    [System.Web.Http.AllowAnonymous]
+    [System.Web.Http.RoutePrefix("api/login")]
     [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
-    public class ClientesController : ApiController
+    public class UsuariosController : ApiController
     {
-        public IHttpActionResult Post(Cliente cliente)
+            [System.Web.Http.HttpPost]
+            [System.Web.Http.Route("authenticate")]
+            public IHttpActionResult Authenticate(Usuario usuario)
+            {
+                if (usuario == null)
+                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+                usuario = UsuarioBLL.Validate(usuario);
+                if (usuario != null)
+                {
+                    return Ok(new
+                    {
+                        user = usuario,
+                        token = TokenGenerator.GenerateTokenJwt(usuario)
+                    });
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+        }
+
+        public IHttpActionResult Post(Usuario usuario)
         {
             try
             {
-                ClienteBLL.Create(cliente);
-                return Content(HttpStatusCode.Created, "Cliente creado correctamente");
+                UsuarioBLL.Create(usuario);
+                return Content(HttpStatusCode.Created, "Usuario creado correctamente");
             }
             catch (Exception ex)
             {
@@ -31,7 +56,7 @@ namespace WebApiCertificacion.Controllers
         {
             try
             {
-                List<Cliente> todos = ClienteBLL.List();
+                List<Usuario> todos = UsuarioBLL.List();
                 return Content(HttpStatusCode.OK, todos);
             }
             catch (Exception ex)
@@ -40,12 +65,12 @@ namespace WebApiCertificacion.Controllers
             }
         }
 
-        public IHttpActionResult Put(Cliente cliente)
+        public IHttpActionResult Put(Usuario usuario)
         {
             try
             {
-                ClienteBLL.Update(cliente);
-                return Content(HttpStatusCode.OK, "Cliente actualizado correctamente");
+                UsuarioBLL.Update(usuario);
+                return Content(HttpStatusCode.OK, "Usuario actualizado correctamente");
 
             }
             catch (Exception ex)
@@ -59,43 +84,12 @@ namespace WebApiCertificacion.Controllers
         {
             try
             {
-                Cliente result = ClienteBLL.Get(id);
+                Usuario result = UsuarioBLL.Get(id);
                 if (result == null)
                 {
                     return NotFound();
                 }
                 return Content(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest, ex);
-            }
-        }
-
-        public IHttpActionResult GetByUser(int id)
-        {
-            try
-            {
-                Cliente result = ClienteBLL.ListByUser(id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Content(HttpStatusCode.OK, result);
-
-            }
-            catch (Exception ex)
-            {
-                return Content(HttpStatusCode.BadRequest, ex);
-            }
-        }
-
-        public IHttpActionResult Delete(int id)
-        {
-            try
-            {
-                ClienteBLL.Delete(id);
-                return Ok("Cliente eliminado correctamente");
             }
             catch (Exception ex)
             {

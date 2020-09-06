@@ -108,5 +108,11 @@ namespace BEUCertificacion.Transactions
                 return resultado;
             }
         }
+
+        public static Cliente ListByUser(int id)
+        {
+            Entities db = new Entities();
+            return db.Clientes.FirstOrDefault(x => x.idusuario == id);
+        }
     }
 }
