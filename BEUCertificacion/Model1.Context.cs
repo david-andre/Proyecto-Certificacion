@@ -12,6 +12,8 @@ namespace BEUCertificacion
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Entities : DbContext
     {
@@ -31,5 +33,125 @@ namespace BEUCertificacion
         public virtual DbSet<Pedido> Pedidoes { get; set; }
         public virtual DbSet<Servicio> Servicios { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
+    
+        public virtual ObjectResult<GetDetallesEmpresasByMonth_Result> GetDetallesEmpresasByMonth(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDetallesEmpresasByMonth_Result>("GetDetallesEmpresasByMonth", idParameter, monthParameter, yearParameter);
+        }
+    
+        public virtual int ServiciosByEmpresasByMonth(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ServiciosByEmpresasByMonth", idParameter, monthParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<GetDetallesByMonth_Result> GetDetallesByMonth(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDetallesByMonth_Result>("GetDetallesByMonth", idParameter, monthParameter, yearParameter);
+        }
+    
+        public virtual int ServiciosByMonth(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ServiciosByMonth", idParameter, monthParameter, yearParameter);
+        }
+    
+        public virtual ObjectResult<GetMontoByServicio_Result> GetMontoByServicio(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMontoByServicio_Result>("GetMontoByServicio", idParameter);
+        }
+    
+        public virtual int MontoByServicio(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MontoByServicio", idParameter);
+        }
+    
+        public virtual ObjectResult<reportePrueba_Result> reportePrueba(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<reportePrueba_Result>("reportePrueba", idParameter, monthParameter, yearParameter);
+        }
+    
+        public virtual int reportePruebaBackend(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("reportePruebaBackend", idParameter, monthParameter, yearParameter);
+        }
     }
 }

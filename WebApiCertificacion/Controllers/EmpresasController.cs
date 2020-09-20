@@ -56,7 +56,7 @@ namespace WebApiCertificacion.Controllers
         }
 
 
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult GetOne(int id)
         {
             try
             {
@@ -66,6 +66,24 @@ namespace WebApiCertificacion.Controllers
                     return NotFound();
                 }
                 return Content(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
+        public IHttpActionResult GetByUser(int id)
+        {
+            try
+            {
+                List<Empresa> result = EmpresaBLL.ListByUser(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Content(HttpStatusCode.OK, result);
+
             }
             catch (Exception ex)
             {

@@ -92,5 +92,11 @@ namespace BEUCertificacion.Transactions
             Entities db = new Entities();
             return db.Empresas.ToList();
         }
+
+        public static List<Empresa> ListByUser(int id)
+        {
+            Entities db = new Entities();
+            return db.Empresas.Where(x => x.idusuario == id).ToList();
+        }
     }
 }

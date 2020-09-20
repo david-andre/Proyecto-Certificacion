@@ -50,6 +50,16 @@ namespace WebApiCertificacion
                 routeTemplate: "api/{controller}/GetOne/{id}",
                 defaults: new { controller = "DetallePedidoController", action = "GetOne", id = RouteParameter.Optional }
             );
+            config.Routes.MapHttpRoute(
+                name: "GetClienteById",
+                routeTemplate: "api/{controller}/GetOne/{id}",
+                defaults: new { controller = "ClientesController", action = "GetOne", id = RouteParameter.Optional }
+            );
+            config.Routes.MapHttpRoute(
+                name: "GetBussinessById",
+                routeTemplate: "api/{controller}/GetOne/{id}",
+                defaults: new { controller = "EmpresasController", action = "GetOne", id = RouteParameter.Optional }
+            );
 
             config.Routes.MapHttpRoute(
                 name: "GetByPedido",
@@ -61,7 +71,16 @@ namespace WebApiCertificacion
                 routeTemplate: "api/{controller}/GetByUser/{id}",
                 defaults: new { controller = "ClientesController", action = "GetByUser", id = RouteParameter.Optional }
             );
-
+            config.Routes.MapHttpRoute(
+                name: "GetBsinessByUser",
+                routeTemplate: "api/{controller}/GetByUser/{id}",
+                defaults: new { controller = "EmpresasController", action = "GetByUser", id = RouteParameter.Optional }
+            );
+            config.Routes.MapHttpRoute(
+                name: "GetDetalleByServicio",
+                routeTemplate: "api/{controller}/GetByServicio/{id}",
+                defaults: new { controller = "DetallePedidoController", action = "GetByServicio", id = RouteParameter.Optional }
+            );
         }
     }
 }

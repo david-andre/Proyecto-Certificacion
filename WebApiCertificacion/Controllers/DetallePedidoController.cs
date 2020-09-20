@@ -92,6 +92,24 @@ namespace WebApiCertificacion.Controllers
             }
         }
 
+        public IHttpActionResult GetByServicio(int id)
+        {
+            try
+            {
+                List<DetallePedido> result = DetallePedidoBLL.ListByService(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Content(HttpStatusCode.OK, result);
+
+            }
+            catch (Exception ex)
+            {
+                return Content(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
 
         /*public IHttpActionResult Delete(int id)
         {

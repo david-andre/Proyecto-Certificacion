@@ -140,6 +140,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetDetallesByMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+          <Parameter Name="year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetDetallesEmpresasByMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+          <Parameter Name="year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetMontoByServicio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="reportePrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+          <Parameter Name="year" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="DBPROYECTOModelStoreContainer">
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
@@ -319,6 +337,42 @@
             <End Role="Usuario" EntitySet="Usuarios" />
             <End Role="Empresa" EntitySet="Empresas" />
           </AssociationSet>
+          <FunctionImport Name="GetDetallesEmpresasByMonth" ReturnType="Collection(DBPROYECTOModel.GetDetallesEmpresasByMonth_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ServiciosByEmpresasByMonth">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetDetallesByMonth" ReturnType="Collection(DBPROYECTOModel.GetDetallesByMonth_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ServiciosByMonth">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMontoByServicio" ReturnType="Collection(DBPROYECTOModel.GetMontoByServicio_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MontoByServicio">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="reportePrueba" ReturnType="Collection(DBPROYECTOModel.reportePrueba_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="reportePruebaBackend">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -355,6 +409,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetDetallesEmpresasByMonth_Result">
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="pedidos" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetDetallesByMonth_Result">
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="pedidos" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetMontoByServicio_Result">
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="monto" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="reportePrueba_Result">
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="pedidos" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -430,6 +500,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDetallesEmpresasByMonth" FunctionName="DBPROYECTOModel.Store.GetDetallesEmpresasByMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBPROYECTOModel.GetDetallesEmpresasByMonth_Result">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="pedidos" ColumnName="pedidos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ServiciosByEmpresasByMonth" FunctionName="DBPROYECTOModel.Store.GetDetallesEmpresasByMonth" />
+          <FunctionImportMapping FunctionImportName="GetDetallesByMonth" FunctionName="DBPROYECTOModel.Store.GetDetallesByMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBPROYECTOModel.GetDetallesByMonth_Result">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="pedidos" ColumnName="pedidos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ServiciosByMonth" FunctionName="DBPROYECTOModel.Store.GetDetallesByMonth" />
+          <FunctionImportMapping FunctionImportName="GetMontoByServicio" FunctionName="DBPROYECTOModel.Store.GetMontoByServicio">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBPROYECTOModel.GetMontoByServicio_Result">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MontoByServicio" FunctionName="DBPROYECTOModel.Store.GetMontoByServicio" />
+          <FunctionImportMapping FunctionImportName="reportePrueba" FunctionName="DBPROYECTOModel.Store.reportePrueba">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBPROYECTOModel.reportePrueba_Result">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="pedidos" ColumnName="pedidos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="reportePruebaBackend" FunctionName="DBPROYECTOModel.Store.reportePrueba" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

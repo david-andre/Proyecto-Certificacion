@@ -55,7 +55,7 @@ namespace WebApiCertificacion.Controllers
         }
 
 
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult GetOne(int id)
         {
             try
             {
